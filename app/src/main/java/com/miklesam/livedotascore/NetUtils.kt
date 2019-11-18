@@ -13,9 +13,22 @@ object Utils{
             .build()
 
     }
+    private val retrofitRank by lazy{
+        Retrofit.Builder()
+            .baseUrl("https://dota2.com/webapi/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+
+    }
+
 
     val SteamHolderApi by lazy {
         retrofit.create(SteamApi::class.java)
+    }
+
+    val RankHolderApi by lazy {
+        retrofitRank.create(SteamApi::class.java)
     }
 
 }

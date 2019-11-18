@@ -12,4 +12,8 @@ interface SteamApi {
         @Query("key") sort: String
         ): Single<LiveGame>
 
+    @GET("ILeaderboard/GetDivisionLeaderboard/v0001/")
+    fun getRanks(
+        @Query("division") division: String
+       ): Single<RankResponse>
 }

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.miklesam.livedotascore.MainActivity.Companion.rankList
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -44,6 +45,34 @@ class MainViewModel :ViewModel(){
 
                 }))
 
+    }
+
+    fun getRanks(){
+        Log.w("RxallListMapinFr", "getRanks")
+        loadingState.value = true
+        val compositeDisposable= CompositeDisposable()
+        compositeDisposable.add(
+            Utils.RankHolderApi.getRanks("europe")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    rankList.clear()
+                    for(player in it.getGame()!!){
+                        if(!player.team_tag.equals("")){
+                            rankList.add(player.rank+"."+ player.team_tag+"."+player.name)
+                        }else{
+                            rankList.add(player.rank+"."+player.name)
+                        }
+
+                    }
+
+                    loadingState.value = false
+                    contentLiveData.value="1"
+                },{
+                    compositeDisposable.dispose()
+                    Log.w("RxError",it.message)
+                    showError(it.message!!)
+                }))
     }
 
     fun showError(error:String){
