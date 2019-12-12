@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name='LiveDotaScore'
+rootProject.name='SteamApi'

@@ -1,4 +1,4 @@
-package com.miklesam.livedotascore
+package com.miklesam.steamapi
 
 import org.junit.Test
 
