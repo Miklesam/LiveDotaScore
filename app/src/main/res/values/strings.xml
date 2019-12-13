@@ -8,9 +8,27 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
+    <string name="menu_liderboard">Liderboard</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+
+
+
+    <string-array name="devision_display">
+        <item>Europe</item>
+        <item>America</item>
+        <item>Southeast Asia</item>
+        <item>China</item>
+    </string-array>
+
+    <string-array name="devision_request">
+        <item>europe</item>
+        <item>americas</item>
+        <item>se_asia</item>
+        <item>china</item>
+    </string-array>
+
+
 </resources>
