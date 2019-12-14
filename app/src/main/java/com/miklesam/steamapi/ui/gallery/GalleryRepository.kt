@@ -14,4 +14,8 @@ class GalleryRepository {
         return Dota2ApiClient.getPlayers()
     }
 
+    fun getErrorPlayers(): LiveData<String> {
+        return Dota2ApiClient.getErrorPlayers()
+    }
+
 }

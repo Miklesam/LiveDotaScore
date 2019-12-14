@@ -33,6 +33,7 @@ class GalleryFragment : Fragment() {
         val spinner=root.findViewById<Spinner>(R.id.spinner)
         val linlayout=root.findViewById<LinearLayout>(R.id.linlayout)
         val progressBar=root.findViewById<ProgressBar>(R.id.progress)
+        val errorText=root.findViewById<TextView>(R.id.errorText)
 
         val spinnerAdapter = context?.let {
             ArrayAdapter.createFromResource(
@@ -64,13 +65,27 @@ class GalleryFragment : Fragment() {
         recyclerLidearboard.adapter = adapter
 
         galleryViewModel.getPlayers().observe(this, Observer {
-            adapter.setPlayers(it)
-            galleryViewModel.setProgress(false)
+            if(it!=null){
+                adapter.setPlayers(it)
+                galleryViewModel.setProgress(false)
+            }
+
         })
+
+        galleryViewModel.getErrorPlayers().observe(this, Observer {
+            if(it!=null){
+                galleryViewModel.setProgress(false)
+                errorText.text=it
+                errorText.visibility= VISIBLE
+                linlayout.visibility= GONE
+            }
+          })
+
 
         galleryViewModel.isProgress().observe(this, Observer {
             if(it){
-             progressBar.visibility=VISIBLE
+                errorText.visibility= GONE
+                progressBar.visibility=VISIBLE
                 linlayout.visibility= GONE
             }else{
                 progressBar.visibility=GONE

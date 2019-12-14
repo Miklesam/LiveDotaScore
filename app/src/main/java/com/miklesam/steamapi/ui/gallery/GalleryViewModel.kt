@@ -32,4 +32,8 @@ class GalleryViewModel : ViewModel() {
         }
     }
 
+    fun getErrorPlayers(): LiveData<String> {
+        return repository.getErrorPlayers()
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.miklesam.steamapi.retrofit
 
+import com.miklesam.steamapi.datamodels.Infos
 import com.miklesam.steamapi.datamodels.RankResponse
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -11,4 +12,8 @@ interface dota2Holder {
     fun getRanks(
         @Query("division") division: String
     ): Single<RankResponse>
+
+
+    @GET("IDOTA2League/GetLeagueInfoList/v001")
+    fun getTournaments(): Single<Infos>
 }
