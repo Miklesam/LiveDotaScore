@@ -1,14 +1,13 @@
-package com.miklesam.steamapi.ui.slideshow
+package com.miklesam.steamapi.ui.tournaments
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.miklesam.steamapi.datamodels.League
-import com.miklesam.steamapi.datamodels.Player
 
-class SlideshowViewModel : ViewModel() {
+class TournamentsViewModel : ViewModel() {
 
-    private var repository= SlideshowRepository()
+    private var repository= TournamentsRepository()
     private val progress = MutableLiveData<Boolean>()
     fun isProgress(): LiveData<Boolean> = progress
     init{

@@ -1,13 +1,13 @@
-package com.miklesam.steamapi.ui.gallery
+package com.miklesam.steamapi.ui.liderboard
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.miklesam.steamapi.datamodels.Player
 
-class GalleryViewModel : ViewModel() {
+class LiderboardViewModel : ViewModel() {
 
-    private var repository= GalleryRepository()
+    private var repository= LiderboardRepository()
     private val progress = MutableLiveData<Boolean>()
     private val division = MutableLiveData<String>()
     fun isProgress(): LiveData<Boolean> = progress

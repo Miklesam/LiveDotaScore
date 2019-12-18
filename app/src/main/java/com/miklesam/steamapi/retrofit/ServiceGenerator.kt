@@ -18,4 +18,17 @@ object ServiceGenerator {
         retrofit.create(dota2Holder::class.java)
     }
 
+
+    private val retrofitSteam by lazy{
+        Retrofit.Builder()
+            .baseUrl("https://api.steampowered.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+    }
+
+    val SteamHolderApi by lazy {
+        retrofitSteam.create(steamHolder::class.java)
+    }
+
 }

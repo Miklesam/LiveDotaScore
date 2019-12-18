@@ -1,9 +1,7 @@
 package com.miklesam.steamapi.retrofit
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.miklesam.steamapi.datamodels.Infos
 import com.miklesam.steamapi.datamodels.League
 import com.miklesam.steamapi.datamodels.Player
 import io.reactivex.android.schedulers.AndroidSchedulers

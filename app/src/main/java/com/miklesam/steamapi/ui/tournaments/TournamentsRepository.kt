@@ -1,11 +1,10 @@
-package com.miklesam.steamapi.ui.slideshow
+package com.miklesam.steamapi.ui.tournaments
 
 import androidx.lifecycle.LiveData
 import com.miklesam.steamapi.datamodels.League
 import com.miklesam.steamapi.retrofit.Dota2ApiClient
-import com.miklesam.steamapi.ui.gallery.GalleryRepository
 
-class SlideshowRepository {
+class TournamentsRepository {
 
 
     fun getTournaments() {

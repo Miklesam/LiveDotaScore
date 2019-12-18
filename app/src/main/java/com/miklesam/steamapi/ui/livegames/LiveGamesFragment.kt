@@ -1,4 +1,4 @@
-package com.miklesam.steamapi.ui.tools
+package com.miklesam.steamapi.ui.livegames
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,22 +10,22 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.miklesam.steamapi.R
 
-class ToolsFragment : Fragment() {
+class LiveGamesFragment : Fragment() {
 
-    private lateinit var toolsViewModel: ToolsViewModel
+    private lateinit var liveGamesViewModel: LiveGamesViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        toolsViewModel =
-            ViewModelProviders.of(this).get(ToolsViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_tools, container, false)
-        val textView: TextView = root.findViewById(R.id.text_tools)
-        toolsViewModel.text.observe(this, Observer {
-            textView.text = it
-        })
+        liveGamesViewModel =
+            ViewModelProviders.of(this).get(LiveGamesViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_livegames, container, false)
+
+        liveGamesViewModel.getLiveGames()
+
+
         return root
     }
 }

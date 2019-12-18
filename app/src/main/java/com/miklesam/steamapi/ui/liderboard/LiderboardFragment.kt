@@ -1,7 +1,6 @@
-package com.miklesam.steamapi.ui.gallery
+package com.miklesam.steamapi.ui.liderboard
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -17,18 +16,18 @@ import com.miklesam.steamapi.R
 import com.miklesam.steamapi.adapters.LidearboardAdapter
 
 
-class GalleryFragment : Fragment() {
+class LiderboardFragment : Fragment() {
 
-    private lateinit var galleryViewModel: GalleryViewModel
+    private lateinit var liderboardViewModel: LiderboardViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        galleryViewModel =
-            ViewModelProviders.of(this).get(GalleryViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_gallery, container, false)
+        liderboardViewModel =
+            ViewModelProviders.of(this).get(LiderboardViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_liderboard, container, false)
         val recyclerLidearboard=root.findViewById<RecyclerView>(R.id.recyclerLidearboard)
         val spinner=root.findViewById<Spinner>(R.id.spinner)
         val linlayout=root.findViewById<LinearLayout>(R.id.linlayout)
@@ -53,7 +52,7 @@ class GalleryFragment : Fragment() {
 
                 val choose = resources.getStringArray(com.miklesam.steamapi.R.array.devision_request)
                 val division=choose[selectedItemPosition]
-                galleryViewModel.setDevision(division)
+                liderboardViewModel.setDevision(division)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
@@ -64,17 +63,17 @@ class GalleryFragment : Fragment() {
         val adapter = LidearboardAdapter()
         recyclerLidearboard.adapter = adapter
 
-        galleryViewModel.getPlayers().observe(this, Observer {
+        liderboardViewModel.getPlayers().observe(this, Observer {
             if(it!=null){
                 adapter.setPlayers(it)
-                galleryViewModel.setProgress(false)
+                liderboardViewModel.setProgress(false)
             }
 
         })
 
-        galleryViewModel.getErrorPlayers().observe(this, Observer {
+        liderboardViewModel.getErrorPlayers().observe(this, Observer {
             if(it!=null){
-                galleryViewModel.setProgress(false)
+                liderboardViewModel.setProgress(false)
                 errorText.text=it
                 errorText.visibility= VISIBLE
                 linlayout.visibility= GONE
@@ -82,7 +81,7 @@ class GalleryFragment : Fragment() {
           })
 
 
-        galleryViewModel.isProgress().observe(this, Observer {
+        liderboardViewModel.isProgress().observe(this, Observer {
             if(it){
                 errorText.visibility= GONE
                 progressBar.visibility=VISIBLE

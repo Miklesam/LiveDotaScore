@@ -18,8 +18,8 @@
             android:title="@string/menu_tournaments" />
         <item
             android:id="@+id/nav_tools"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/menu_tools" />
+            android:icon="@drawable/ic_live_tv"
+            android:title="@string/menu_livegames" />
     </group>
 
     <item android:title="Communicate">

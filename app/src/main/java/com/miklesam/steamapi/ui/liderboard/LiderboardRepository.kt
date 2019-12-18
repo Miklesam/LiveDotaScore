@@ -1,10 +1,10 @@
-package com.miklesam.steamapi.ui.gallery
+package com.miklesam.steamapi.ui.liderboard
 
 import androidx.lifecycle.LiveData
 import com.miklesam.steamapi.retrofit.Dota2ApiClient
 import com.miklesam.steamapi.datamodels.Player
 
-class GalleryRepository {
+class LiderboardRepository {
 
 
     fun getLidearBoard(division:String) {

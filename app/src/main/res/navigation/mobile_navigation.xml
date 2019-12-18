@@ -13,21 +13,21 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.miklesam.steamapi.ui.gallery.GalleryFragment"
+        android:name="com.miklesam.steamapi.ui.liderboard.LiderboardFragment"
         android:label="@string/menu_liderboard"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_liderboard" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.miklesam.steamapi.ui.slideshow.SlideshowFragment"
+        android:name="com.miklesam.steamapi.ui.tournaments.TournamentsFragment"
         android:label="@string/menu_tournaments"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_tournaments" />
 
     <fragment
         android:id="@+id/nav_tools"
-        android:name="com.miklesam.steamapi.ui.tools.ToolsFragment"
-        android:label="@string/menu_tools"
-        tools:layout="@layout/fragment_tools" />
+        android:name="com.miklesam.steamapi.ui.livegames.LiveGamesFragment"
+        android:label="@string/menu_livegames"
+        tools:layout="@layout/fragment_livegames" />
 
     <fragment
         android:id="@+id/nav_share"
