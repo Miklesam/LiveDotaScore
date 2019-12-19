@@ -49,7 +49,6 @@ class LiderboardFragment : Fragment() {
                 parent: AdapterView<*>,
                 itemSelected: View?, selectedItemPosition: Int, selectedId: Long
             ) {
-
                 val choose = resources.getStringArray(com.miklesam.steamapi.R.array.devision_request)
                 val division=choose[selectedItemPosition]
                 liderboardViewModel.setDevision(division)
