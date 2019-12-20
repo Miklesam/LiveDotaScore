@@ -34,17 +34,26 @@ class LiveGamesAdapter : RecyclerView.Adapter<LiveGamesAdapter.GameHolder>() {
         val currentGame: LiveGame = mGames.get(position)
         holder.radiantScore.text=currentGame.radiant_score
         holder.direScore.text=currentGame.dire_score
-        holder.lead.text=currentGame.team_name_radiant
+        holder.lead.text=currentGame.radiant_lead
+        holder.leagueId.text=currentGame.league_id
+        holder.radiantName.text=currentGame.team_name_radiant
+        holder.direName.text=currentGame.team_name_dire
     }
 
     class GameHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         var radiantScore: TextView
         var direScore: TextView
         var lead: TextView
+        var leagueId:TextView
+        var radiantName:TextView
+        var direName:TextView
         init {
             radiantScore=itemView.radiantScore
             direScore=itemView.direScore
             lead=itemView.lead
+            leagueId=itemView.leagueId
+            radiantName=itemView.radiantName
+            direName=itemView.direName
         }
     }
 }

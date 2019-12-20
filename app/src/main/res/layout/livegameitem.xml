@@ -1,37 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60sp"
+    android:layout_height="80sp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="4dp"
     android:layout_marginEnd="8dp"
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp">
-
     <LinearLayout
-        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="100"
-        android:orientation="horizontal"
-        >
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="15"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10sp"
-            android:text="radiantScore"
-            android:id="@+id/radiantScore"
-            android:layout_gravity="center"
-            android:textColor="@android:color/black"
-            android:textSize="20sp">
+            android:gravity="center"
+            android:id="@+id/leagueId">
 
         </TextView>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/radiantName"
+                android:text="RadiantTeam"
+                android:layout_marginStart="5sp"
+                android:textSize="20sp"
+                android:layout_alignParentLeft="true">
+
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5sp"
+                android:id="@+id/direName"
+                android:text="DireTeam"
+                android:textSize="20sp"
+                android:layout_alignParentRight="true">
+
+            </TextView>
+
+            <LinearLayout
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10sp"
+                    android:text="rS"
+                    android:id="@+id/radiantScore"
+                    android:layout_gravity="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10sp"
+                    android:text=":"
+                    android:layout_gravity="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10sp"
+                    android:text="dS"
+                    android:id="@+id/direScore"
+                    android:layout_gravity="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp">
+
+                </TextView>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+
+
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="60"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:text="lead"
@@ -42,20 +109,9 @@
 
         </TextView>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="25"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10sp"
-            android:text="direScore"
-            android:id="@+id/direScore"
-            android:layout_gravity="center"
-            android:textColor="@android:color/black"
-            android:textSize="15sp">
-
-        </TextView>
-
     </LinearLayout>
+
+
 
 
 
