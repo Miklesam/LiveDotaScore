@@ -13,8 +13,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.miklesam.steamapi.R
 import com.miklesam.steamapi.adapters.LiveGamesAdapter
+import com.miklesam.steamapi.adapters.OnGameListener
+import com.miklesam.steamapi.datamodels.LiveGame
 
-class LiveGamesFragment : Fragment() {
+class LiveGamesFragment : Fragment(),OnGameListener {
+    lateinit var mGames:List<LiveGame>
+    override fun onGameClick(position: Int) {
+        Log.w("Click, In Fragment","position= ${mGames.get(position).team_name_dire}"
+        )
+        liveGamesViewModel.getLiveTournamentGames()
+    }
 
     private lateinit var liveGamesViewModel: LiveGamesViewModel
 
@@ -30,7 +38,7 @@ class LiveGamesFragment : Fragment() {
 
         recyclerLiveGame.layoutManager = LinearLayoutManager(context)
         recyclerLiveGame.setHasFixedSize(true)
-        val adapter = LiveGamesAdapter()
+        val adapter = LiveGamesAdapter(this)
         recyclerLiveGame.adapter = adapter
 
 
@@ -40,6 +48,7 @@ class LiveGamesFragment : Fragment() {
         liveGamesViewModel.returnGames().observe(this, Observer {
             if(it!=null){
                 //Log.w("InFragment ", it.size.toString())
+                mGames=it
                 adapter.setGames(it)
             }
 

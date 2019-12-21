@@ -11,6 +11,9 @@ class LiveGamesViewModel : ViewModel() {
     fun getLiveGames(){
        repository.getLiveGames()
     }
+    fun getLiveTournamentGames(){
+        repository.getLiveTournamentsGames()
+    }
 
     fun returnGames(): LiveData<List<LiveGame>> {
         return repository.returnGames()

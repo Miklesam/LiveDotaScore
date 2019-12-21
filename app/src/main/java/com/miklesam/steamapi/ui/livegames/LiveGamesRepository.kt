@@ -10,6 +10,10 @@ class LiveGamesRepository{
         SteamApiClient.getLiveGames()
     }
 
+    fun getLiveTournamentsGames(){
+        SteamApiClient.getTournamentsLiveGames()
+    }
+
     fun returnGames(): LiveData<List<LiveGame>> {
         return SteamApiClient.returnGames()
     }
