@@ -46,23 +46,21 @@ object SteamApiClient{
         radiantTeam.clear()
         direTeam.clear()
         compositeDisposable.add(
-            ServiceGenerator.SteamHolderApi.getLiveLeagueGames("DC5456E165A004A2F31197712AA3990D","11496")
+            ServiceGenerator.SteamHolderApi.getLiveLeagueGames("DC5456E165A004A2F31197712AA3990D","11114")
                 .timeout(4, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    //Log.w("LiveGame",it.result.games.get(0).players.toString())
-                    for(player in it.result.games.get(0).players){
-                        if(player.team==0){
-                            radiantTeam.add(player)
-                        }else if(player.team==1){
-                            direTeam.add(player)
-                        }
 
+                    Log.w("LiveGames Radiant:",it.result.games.get(0).scoreboard.radiant.score)
+                    Log.w("LiveGames Dire:",it.result.games.get(0).scoreboard.dire.score)
+                    for(player in it.result.games.get(0).scoreboard.radiant.players){
 
+                        Log.w("RadiantPlayer:","account "+player.account_id)
+                        Log.w("RadiantPlayer:","hero_id "+player.hero_id)
+                        Log.w("RadiantPlayer:","level "+player.level)
+                        Log.w("RadiantPlayer:","net_worth "+player.net_worth)
                     }
-                    Log.w("Radiant",radiantTeam.toString())
-                    Log.w("Dire",direTeam.toString())
 
                     },{
                     Log.w("liveGames","Error: "+it.message)
