@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.miklesam.steamapi.datamodels.LiveGame
 import com.miklesam.steamapi.datamodels.LivePlayer
+import com.miklesam.steamapi.utils.Constants.DEFAULT_HEROES_NAME
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -57,7 +58,7 @@ object SteamApiClient{
                     for(player in it.result.games.get(0).scoreboard.radiant.players){
 
                         Log.w("RadiantPlayer:","account "+player.account_id)
-                        Log.w("RadiantPlayer:","hero_id "+player.hero_id)
+                        Log.w("RadiantPlayer:","hero_id Name "+ DEFAULT_HEROES_NAME.get(player.hero_id))
                         Log.w("RadiantPlayer:","level "+player.level)
                         Log.w("RadiantPlayer:","net_worth "+player.net_worth)
                     }
