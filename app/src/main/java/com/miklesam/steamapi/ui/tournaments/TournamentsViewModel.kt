@@ -10,6 +10,7 @@ class TournamentsViewModel : ViewModel() {
     private var repository= TournamentsRepository()
     private val progress = MutableLiveData<Boolean>()
     fun isProgress(): LiveData<Boolean> = progress
+
     init{
         getTournaments()
     }

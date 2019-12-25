@@ -2,6 +2,8 @@ package com.miklesam.steamapi.ui.livegames
 
 import androidx.lifecycle.LiveData
 import com.miklesam.steamapi.datamodels.LiveGame
+import com.miklesam.steamapi.datamodels.LiveLeagueGame
+import com.miklesam.steamapi.retrofit.Dota2ApiClient
 import com.miklesam.steamapi.retrofit.SteamApiClient
 
 class LiveGamesRepository{
@@ -10,12 +12,21 @@ class LiveGamesRepository{
         SteamApiClient.getLiveGames()
     }
 
-    fun getLiveTournamentsGames(){
-        SteamApiClient.getTournamentsLiveGames()
+    fun getLiveTournamentsGames(league:String){
+        SteamApiClient.getTournamentsLiveGames(league)
     }
 
     fun returnGames(): LiveData<List<LiveGame>> {
         return SteamApiClient.returnGames()
+    }
+
+    fun returnCurrentGame(): LiveData<LiveLeagueGame> {
+        return SteamApiClient.returnCurrentGame()
+    }
+
+
+    fun getError(): LiveData<String> {
+        return SteamApiClient.getError()
     }
 
 }

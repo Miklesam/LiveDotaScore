@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.miklesam.steamapi.datamodels.LiveGame
+import com.miklesam.steamapi.datamodels.LiveLeagueGame
 import com.miklesam.steamapi.datamodels.LivePlayer
 import com.miklesam.steamapi.utils.Constants.DEFAULT_HEROES_NAME
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -13,19 +14,31 @@ import java.util.concurrent.TimeUnit
 
 object SteamApiClient{
     val mGames = MutableLiveData<List<LiveGame>>()
+    val mGame = MutableLiveData<LiveLeagueGame>()
+    val mError = MutableLiveData<String>()
 
     fun returnGames(): LiveData<List<LiveGame>> {
         return mGames
     }
 
+    fun returnCurrentGame(): LiveData<LiveLeagueGame> {
+        return mGame
+    }
 
+
+
+    fun getError(): LiveData<String> {
+        return mError
+    }
 
     fun getLiveGames(){
         mGames.value=null
+        mError.value=null
         val compositeDisposable= CompositeDisposable()
         compositeDisposable.add(
             ServiceGenerator.SteamHolderApi.getLiveGames("DC5456E165A004A2F31197712AA3990D","0")
-                .timeout(4, TimeUnit.SECONDS)
+                .delay(5,TimeUnit.SECONDS)
+                .timeout(8, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -35,34 +48,30 @@ object SteamApiClient{
                     //Log.w("liveGames",it.game_list.get(0).league_id)
 
                 },{
-                    Log.w("liveGames","Error: "+it.message)
+                    mError.value=it.message
+                    //Log.w("liveGames","Error: "+it.message)
                 }))
     }
 
 
-    fun getTournamentsLiveGames(){
+    fun getTournamentsLiveGames(league:String){
+        mGame.value=null
         val radiantTeam=ArrayList<LivePlayer>()
         val direTeam=ArrayList<LivePlayer>()
         val compositeDisposable= CompositeDisposable()
         radiantTeam.clear()
         direTeam.clear()
         compositeDisposable.add(
-            ServiceGenerator.SteamHolderApi.getLiveLeagueGames("DC5456E165A004A2F31197712AA3990D","11114")
+            ServiceGenerator.SteamHolderApi.getLiveLeagueGames("DC5456E165A004A2F31197712AA3990D",league)
                 .timeout(4, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-
-                    Log.w("LiveGames Radiant:",it.result.games.get(0).scoreboard.radiant.score)
-                    Log.w("LiveGames Dire:",it.result.games.get(0).scoreboard.dire.score)
-                    for(player in it.result.games.get(0).scoreboard.radiant.players){
-
-                        Log.w("RadiantPlayer:","account "+player.account_id)
-                        Log.w("RadiantPlayer:","hero_id Name "+ DEFAULT_HEROES_NAME.get(player.hero_id))
-                        Log.w("RadiantPlayer:","level "+player.level)
-                        Log.w("RadiantPlayer:","net_worth "+player.net_worth)
+                    if(it.result.games.size==0){
+                        Log.w("liveGames","Error: Seems like game already end")
+                    }else{
+                        mGame.value=it.result.games.get(0)
                     }
-
                     },{
                     Log.w("liveGames","Error: "+it.message)
                 }))
