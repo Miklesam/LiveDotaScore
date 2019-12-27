@@ -1,5 +1,6 @@
 package com.miklesam.steamapi.ui.livegames
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,10 +11,13 @@ class LiveGamesViewModel : ViewModel() {
 
     private var repository= LiveGamesRepository()
     private val progress = MutableLiveData<Boolean>()
+    private val currentGame = MutableLiveData<Boolean>()
     fun isProgress(): LiveData<Boolean> = progress
+    fun isCurrentGame(): LiveData<Boolean> = currentGame
 
     init {
         progress.value=true
+        currentGame.value=false
     }
 
     fun getLiveGames(){
@@ -22,7 +26,10 @@ class LiveGamesViewModel : ViewModel() {
     fun getLiveTournamentGames(league:String){
         repository.getLiveTournamentsGames(league)
     }
-
+    fun setCurrentGame(boolean: Boolean){
+        currentGame.value=boolean
+        Log.w("Set Current", boolean.toString())
+    }
 
     fun returnCurrentGame(): LiveData<LiveLeagueGame> {
        return repository.returnCurrentGame()

@@ -21,7 +21,18 @@ import com.miklesam.steamapi.datamodels.LiveGame
 import com.miklesam.steamapi.utils.Constants
 import com.miklesam.steamapi.utils.Constants.DEFAULT_HEROES_IMAGE
 
+
 class LiveGamesFragment : Fragment(),OnGameListener {
+    lateinit  var liveGamesViewModel: LiveGamesViewModel
+    private lateinit var gameInfo: LinearLayout
+    private lateinit var swiperRefresh: SwipeRefreshLayout
+
+
+    companion object{
+        var currentGame=0
+    }
+
+
     lateinit var mGames:List<LiveGame>
     override fun onGameClick(position: Int) {
         Log.w("Click, In Fragment","position= ${mGames.get(position).team_name_dire}"
@@ -29,24 +40,26 @@ class LiveGamesFragment : Fragment(),OnGameListener {
         if(mGames.get(position).league_id.equals("0")){
             Toast.makeText(context, "This is Pub please choose league game", Toast.LENGTH_SHORT).show()
         }else{
+            currentGame=1
             liveGamesViewModel.getLiveTournamentGames(mGames.get(position).league_id)
-            swiperRefresh.visibility=GONE
-            gameInfo.visibility=VISIBLE
+            liveGamesViewModel.setCurrentGame(true)
         }
 
     }
 
-    private lateinit var liveGamesViewModel: LiveGamesViewModel
-    private lateinit var gameInfo: LinearLayout
-    private lateinit var swiperRefresh: SwipeRefreshLayout
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        liveGamesViewModel =
+            ViewModelProviders.of(this).get(LiveGamesViewModel::class.java)
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        liveGamesViewModel =
-            ViewModelProviders.of(this).get(LiveGamesViewModel::class.java)
+
         val root = inflater.inflate(R.layout.fragment_livegames, container, false)
         val recyclerLiveGame=root.findViewById<RecyclerView>(R.id.recyclerLiveGames)
         val progressBar=root.findViewById<ProgressBar>(R.id.progress)
@@ -57,6 +70,8 @@ class LiveGamesFragment : Fragment(),OnGameListener {
         recyclerLiveGame.adapter = adapter
         swiperRefresh=root.findViewById<SwipeRefreshLayout>(R.id.swiperRefresh)
         gameInfo=root.findViewById<LinearLayout>(R.id.gameInfo)
+
+
         val matchId=root.findViewById<TextView>(R.id.matchId)
         val Radiant1=root.findViewById<TextView>(R.id.Radiant1)
         val Radiant2=root.findViewById<TextView>(R.id.Radiant2)
@@ -65,6 +80,10 @@ class LiveGamesFragment : Fragment(),OnGameListener {
         val Radiant5=root.findViewById<TextView>(R.id.Radiant5)
 
         val Dire1=root.findViewById<TextView>(R.id.Dire1)
+        val Dire2=root.findViewById<TextView>(R.id.Dire2)
+        val Dire3=root.findViewById<TextView>(R.id.Dire3)
+        val Dire4=root.findViewById<TextView>(R.id.Dire4)
+        val Dire5=root.findViewById<TextView>(R.id.Dire5)
 
         val RadiantImage1=root.findViewById<ImageView>(R.id.radIma1)
         val RadiantImage2=root.findViewById<ImageView>(R.id.radIma2)
@@ -73,9 +92,21 @@ class LiveGamesFragment : Fragment(),OnGameListener {
         val RadiantImage5=root.findViewById<ImageView>(R.id.radIma5)
 
         val DireImage1=root.findViewById<ImageView>(R.id.direIma1)
+        val DireImage2=root.findViewById<ImageView>(R.id.direIma2)
+        val DireImage3=root.findViewById<ImageView>(R.id.direIma3)
+        val DireImage4=root.findViewById<ImageView>(R.id.direIma4)
+        val DireImage5=root.findViewById<ImageView>(R.id.direIma5)
+
+        val firstStat=root.findViewById<View>(R.id.test1)
+        val secondStat=root.findViewById<View>(R.id.test2)
+
+        val radKDA1=firstStat.findViewById<TextView>(R.id.radKDA)
+        val radKDA2=secondStat.findViewById<TextView>(R.id.radKDA)
+
 
         liveGamesViewModel.getLiveGames()
         liveGamesViewModel.setProgress(true)
+
 
         liveGamesViewModel.returnGames().observe(this, Observer {
             if(it!=null){
@@ -112,22 +143,52 @@ class LiveGamesFragment : Fragment(),OnGameListener {
         liveGamesViewModel.returnCurrentGame().observe(this, Observer {
             if(it!=null){
                 Log.w("In Fragment get Match",it.match_id)
-                matchId.text=it.match_id
-                Radiant1.text=Constants.DEFAULT_HEROES_NAME.get(it.scoreboard.radiant.players.get(0).hero_id)
-                Radiant2.text=Constants.DEFAULT_HEROES_NAME.get(it.scoreboard.radiant.players.get(1).hero_id)
-                Radiant3.text=Constants.DEFAULT_HEROES_NAME.get(it.scoreboard.radiant.players.get(2).hero_id)
-                Radiant4.text=Constants.DEFAULT_HEROES_NAME.get(it.scoreboard.radiant.players.get(3).hero_id)
-                Radiant5.text=Constants.DEFAULT_HEROES_NAME.get(it.scoreboard.radiant.players.get(4).hero_id)
 
-                RadiantImage1.setImageResource(DEFAULT_HEROES_IMAGE[it.scoreboard.radiant.players.get(0).hero_id] ?: error(""))
-                RadiantImage2.setImageResource(DEFAULT_HEROES_IMAGE.get(it.scoreboard.radiant.players.get(1).hero_id)!!)
-                RadiantImage3.setImageResource(DEFAULT_HEROES_IMAGE.get(it.scoreboard.radiant.players.get(2).hero_id)!!)
-                RadiantImage4.setImageResource(DEFAULT_HEROES_IMAGE.get(it.scoreboard.radiant.players.get(3).hero_id)!!)
-                RadiantImage5.setImageResource(DEFAULT_HEROES_IMAGE.get(it.scoreboard.radiant.players.get(4).hero_id)!!)
+                if(it.scoreboard.radiant.players.get(0).hero_id>0){
+                    matchId.text=it.match_id
+                    Radiant1.text=Constants.DEFAULT_HEROES_NAME.get(it.scoreboard.radiant.players.get(0).hero_id)
+                    Radiant2.text=Constants.DEFAULT_HEROES_NAME.get(it.scoreboard.radiant.players.get(1).hero_id)
+                    Radiant3.text=Constants.DEFAULT_HEROES_NAME.get(it.scoreboard.radiant.players.get(2).hero_id)
+                    Radiant4.text=Constants.DEFAULT_HEROES_NAME.get(it.scoreboard.radiant.players.get(3).hero_id)
+                    Radiant5.text=Constants.DEFAULT_HEROES_NAME.get(it.scoreboard.radiant.players.get(4).hero_id)
 
-                Dire1.text=Constants.DEFAULT_HEROES_NAME.get(it.scoreboard.dire.players.get(0).hero_id)
-                DireImage1.setImageResource(DEFAULT_HEROES_IMAGE.get(it.scoreboard.dire.players.get(0).hero_id)!!)
+                    RadiantImage1.setImageResource(DEFAULT_HEROES_IMAGE[it.scoreboard.radiant.players.get(0).hero_id] ?: error("non image"))
+                    RadiantImage2.setImageResource(DEFAULT_HEROES_IMAGE[it.scoreboard.radiant.players.get(1).hero_id] ?: error("non image"))
+                    RadiantImage3.setImageResource(DEFAULT_HEROES_IMAGE[it.scoreboard.radiant.players.get(2).hero_id] ?: error("non image"))
+                    RadiantImage4.setImageResource(DEFAULT_HEROES_IMAGE[it.scoreboard.radiant.players.get(3).hero_id] ?: error("non image"))
+                    RadiantImage5.setImageResource(DEFAULT_HEROES_IMAGE[it.scoreboard.radiant.players.get(4).hero_id] ?: error("non image"))
 
+                    Dire1.text=Constants.DEFAULT_HEROES_NAME.get(it.scoreboard.dire.players.get(0).hero_id)
+                    Dire2.text=Constants.DEFAULT_HEROES_NAME.get(it.scoreboard.dire.players.get(1).hero_id)
+                    Dire3.text=Constants.DEFAULT_HEROES_NAME.get(it.scoreboard.dire.players.get(2).hero_id)
+                    Dire4.text=Constants.DEFAULT_HEROES_NAME.get(it.scoreboard.dire.players.get(3).hero_id)
+                    Dire5.text=Constants.DEFAULT_HEROES_NAME.get(it.scoreboard.dire.players.get(4).hero_id)
+
+                    DireImage1.setImageResource(DEFAULT_HEROES_IMAGE[it.scoreboard.dire.players.get(0).hero_id] ?: error("non image"))
+                    DireImage2.setImageResource(DEFAULT_HEROES_IMAGE[it.scoreboard.dire.players.get(1).hero_id] ?: error("non image"))
+                    DireImage3.setImageResource(DEFAULT_HEROES_IMAGE[it.scoreboard.dire.players.get(2).hero_id] ?: error("non image"))
+                    DireImage4.setImageResource(DEFAULT_HEROES_IMAGE[it.scoreboard.dire.players.get(3).hero_id] ?: error("non image"))
+                    DireImage5.setImageResource(DEFAULT_HEROES_IMAGE[it.scoreboard.dire.players.get(4).hero_id] ?: error("non image"))
+                    val KDA=it.scoreboard.dire.players.get(0).kills.toString()+"/"+it.scoreboard.dire.players.get(0).death.toString()+"/"+it.scoreboard.dire.players.get(0).assists.toString()
+                    radKDA1.text=KDA
+                    radKDA2.text="15/1/10"
+
+                } else{
+                    matchId.text="Пики Баны"
+                }
+
+
+            }
+        })
+
+
+        liveGamesViewModel.isCurrentGame().observe(this, Observer {
+            if(it){
+                swiperRefresh.visibility=GONE
+                gameInfo.visibility=VISIBLE
+            }else{
+                swiperRefresh.visibility= VISIBLE
+                gameInfo.visibility=GONE
             }
         })
 
@@ -137,6 +198,16 @@ class LiveGamesFragment : Fragment(),OnGameListener {
 
 
 
+
+
         return root
     }
+
+    override fun onDestroyView() {
+        currentGame=0
+        super.onDestroyView()
+    }
+
+
+
 }

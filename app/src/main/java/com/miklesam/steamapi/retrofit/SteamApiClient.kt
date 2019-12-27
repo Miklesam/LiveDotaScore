@@ -37,7 +37,7 @@ object SteamApiClient{
         val compositeDisposable= CompositeDisposable()
         compositeDisposable.add(
             ServiceGenerator.SteamHolderApi.getLiveGames("DC5456E165A004A2F31197712AA3990D","0")
-                .delay(5,TimeUnit.SECONDS)
+                //.delay(5,TimeUnit.SECONDS)
                 .timeout(8, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -63,7 +63,7 @@ object SteamApiClient{
         direTeam.clear()
         compositeDisposable.add(
             ServiceGenerator.SteamHolderApi.getLiveLeagueGames("DC5456E165A004A2F31197712AA3990D",league)
-                .timeout(4, TimeUnit.SECONDS)
+                //.timeout(4, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
