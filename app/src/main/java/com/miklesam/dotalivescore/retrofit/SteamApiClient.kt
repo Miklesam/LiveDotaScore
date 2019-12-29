@@ -42,10 +42,6 @@ object SteamApiClient{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     mGames.value=it.game_list
-                    //Log.w("liveGames",it.game_list.get(0).dire_score)
-                    //Log.w("liveGames",it.game_list.get(0).radiant_score)
-                    //Log.w("liveGames",it.game_list.get(0).league_id)
-
                 },{
                     mError.value=it.message
                     //Log.w("liveGames","Error: "+it.message)

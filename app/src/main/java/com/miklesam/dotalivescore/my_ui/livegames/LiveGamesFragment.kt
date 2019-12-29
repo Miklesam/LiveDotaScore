@@ -67,35 +67,58 @@ class LiveGamesFragment : Fragment(),OnGameListener {
         recyclerLiveGame.layoutManager = LinearLayoutManager(context)
         recyclerLiveGame.setHasFixedSize(true)
         val adapter = LiveGamesAdapter(this)
+        val radTeam=root.findViewById<TextView>(R.id.radTeam)
+        val direTeam=root.findViewById<TextView>(R.id.DireTeam)
         recyclerLiveGame.adapter = adapter
         swiperRefresh=root.findViewById<SwipeRefreshLayout>(R.id.swiperRefresh)
         gameInfo=root.findViewById<LinearLayout>(R.id.gameInfo)
 
-
         val matchId=root.findViewById<TextView>(R.id.matchId)
-        val RadHero = Array(5) {root.findViewById<TextView>(R.id.Radiant1);root.findViewById<TextView>(R.id.Radiant2);
-            root.findViewById<TextView>(R.id.Radiant3);root.findViewById<TextView>(R.id.Radiant4);root.findViewById<TextView>(R.id.Radiant5)}
-        val DireHero = Array(5){root.findViewById<TextView>(R.id.Dire1);root.findViewById<TextView>(R.id.Dire2);
-            root.findViewById<TextView>(R.id.Dire3);root.findViewById<TextView>(R.id.Dire4);root.findViewById<TextView>(R.id.Dire5)}
-        val RadImage = Array(5) {root.findViewById<ImageView>(R.id.radIma1);root.findViewById<ImageView>(R.id.radIma2);
-            root.findViewById<ImageView>(R.id.radIma3);root.findViewById<ImageView>(R.id.radIma4);root.findViewById<ImageView>(R.id.radIma5)}
-        val DireImage = Array(5) {root.findViewById<ImageView>(R.id.direIma1);root.findViewById<ImageView>(R.id.direIma2);
-            root.findViewById<ImageView>(R.id.direIma3);root.findViewById<ImageView>(R.id.direIma4);root.findViewById<ImageView>(R.id.direIma5)}
+        val RadHero = Array<TextView>(5){root.findViewById<TextView>(R.id.Radiant1)
+        }
+        RadHero[1]=root.findViewById<TextView>(R.id.Radiant2)
+        RadHero[2]=root.findViewById<TextView>(R.id.Radiant3)
+        RadHero[3]=root.findViewById<TextView>(R.id.Radiant4)
+        RadHero[4]=root.findViewById<TextView>(R.id.Radiant5)
+        val DireHero = Array(5){root.findViewById<TextView>(R.id.Dire1)}
+        DireHero[1]=root.findViewById<TextView>(R.id.Dire2)
+        DireHero[2]=root.findViewById<TextView>(R.id.Dire3)
+        DireHero[3]=root.findViewById<TextView>(R.id.Dire4)
+        DireHero[4]=root.findViewById<TextView>(R.id.Dire5)
+        val RadImage = Array(5) {root.findViewById<ImageView>(R.id.radIma1)}
+        RadImage[1]=root.findViewById<ImageView>(R.id.radIma2)
+        RadImage[2]=root.findViewById<ImageView>(R.id.radIma3)
+        RadImage[3]=root.findViewById<ImageView>(R.id.radIma4)
+        RadImage[4]=root.findViewById<ImageView>(R.id.radIma5)
+        val DireImage = Array(5) {root.findViewById<ImageView>(R.id.direIma1)}
+        DireImage[1]=root.findViewById<ImageView>(R.id.direIma2)
+        DireImage[2]=root.findViewById<ImageView>(R.id.direIma3)
+        DireImage[3]=root.findViewById<ImageView>(R.id.direIma4)
+        DireImage[4]=root.findViewById<ImageView>(R.id.direIma5)
+        val includeRoot = Array(5) {root.findViewById<View>(R.id.test1)}
+        includeRoot[1]=root.findViewById<View>(R.id.test2)
+        includeRoot[2]=root.findViewById<View>(R.id.test3)
+        includeRoot[3]=root.findViewById<View>(R.id.test4)
+        includeRoot[4]=root.findViewById<View>(R.id.test5)
 
-        val includeRoot = Array(5) {root.findViewById<View>(R.id.test1);root.findViewById<View>(R.id.test2);
-            root.findViewById<View>(R.id.test3);root.findViewById<View>(R.id.test4);root.findViewById<View>(R.id.test5)}
+        val radKDA = Array(5) {includeRoot[0].findViewById<TextView>(R.id.radKDA)}
+        val direKDA = Array(5) {includeRoot[0].findViewById<TextView>(R.id.direKDA)}
+        val radLH = Array(5) {includeRoot[0].findViewById<TextView>(R.id.radLHDN)}
+        val direLH = Array(5) {includeRoot[0].findViewById<TextView>(R.id.direLHDN)}
+        val radGPM = Array(5) {includeRoot[0].findViewById<TextView>(R.id.radGPM)}
+        val direGPM = Array(5) {includeRoot[0].findViewById<TextView>(R.id.direGPM)}
 
-        val radKDA = Array(5) {includeRoot[0].findViewById<TextView>(R.id.radKDA);includeRoot[1].findViewById<TextView>(R.id.radKDA) ;
-            includeRoot[2].findViewById<TextView>(R.id.radKDA);includeRoot[3].findViewById<TextView>(R.id.radKDA);includeRoot[4].findViewById<TextView>(R.id.radKDA)}
-        val radLH = Array(5) {includeRoot[0].findViewById<TextView>(R.id.radLHDN);includeRoot[1].findViewById<TextView>(R.id.radLHDN) ;
-            includeRoot[2].findViewById<TextView>(R.id.radLHDN);includeRoot[3].findViewById<TextView>(R.id.radLHDN);includeRoot[4].findViewById<TextView>(R.id.radLHDN)}
-        val radGPM = Array(5) {includeRoot[0].findViewById<TextView>(R.id.radGPM);includeRoot[1].findViewById<TextView>(R.id.radGPM) ;
-            includeRoot[2].findViewById<TextView>(R.id.radGPM);includeRoot[3].findViewById<TextView>(R.id.radGPM);includeRoot[4].findViewById<TextView>(R.id.radGPM)}
+        for (i in 0..4){
+            radKDA[i]=includeRoot[i].findViewById<TextView>(R.id.radKDA)
+            direKDA[i]=includeRoot[i].findViewById<TextView>(R.id.direKDA)
+            radLH[i]=includeRoot[i].findViewById<TextView>(R.id.radLHDN)
+            radGPM[i]=includeRoot[i].findViewById<TextView>(R.id.radGPM)
+            direLH[i]=includeRoot[i].findViewById<TextView>(R.id.direLHDN)
+            direGPM[i]=includeRoot[i].findViewById<TextView>(R.id.direGPM)
+        }
 
         val emo=root.findViewById<ImageView>(R.id.emo)
-
         emo.setOnClickListener { liveGamesViewModel.setCurrentGame(false) }
-
 
         liveGamesViewModel.getLiveGames()
         liveGamesViewModel.setProgress(true)
@@ -134,23 +157,31 @@ class LiveGamesFragment : Fragment(),OnGameListener {
 
         liveGamesViewModel.returnCurrentGame().observe(this, Observer {
             if(it!=null){
-                Log.w("In Fragment get Match",it.match_id)
-
                 if(it.scoreboard.radiant.players.get(0).hero_id>0){
                     matchId.text=it.match_id
+                    radTeam.text=it.radiant_team.team_name
+                    direTeam.text=it.dire_team.team_name
 
-                    for (i in 0..5){
+                    for (i in 0..4){
                         RadHero[i].text=Constants.DEFAULT_HEROES_NAME.get(it.scoreboard.radiant.players.get(i).hero_id)
                         DireHero[i].text=Constants.DEFAULT_HEROES_NAME.get(it.scoreboard.dire.players.get(i).hero_id)
                         RadImage[i].setImageResource(DEFAULT_HEROES_IMAGE[it.scoreboard.radiant.players.get(i).hero_id] ?: error("non image"))
-                        DireImage[i].setImageResource(DEFAULT_HEROES_IMAGE[it.scoreboard.dire.players.get(0).hero_id] ?: error("non image"))
+                        DireImage[i].setImageResource(DEFAULT_HEROES_IMAGE[it.scoreboard.dire.players.get(i).hero_id] ?: error("non image"))
                         val KDA=it.scoreboard.radiant.players.get(i).kills.toString()+"/"+it.scoreboard.radiant.players.get(i).death.toString()+"/"+it.scoreboard.radiant.players.get(i).assists.toString()
                         radKDA[i].text=KDA
                         val LH=it.scoreboard.radiant.players.get(i).last_hits.toString()+"/"+it.scoreboard.radiant.players.get(i).denies.toString()
-                        radLH[0].text=LH
+                        radLH[i].text=LH
                         val GPM=it.scoreboard.radiant.players.get(i).gold_per_min.toString()+"/"+it.scoreboard.radiant.players.get(i).xp_per_min.toString()
                         radGPM[i].text=GPM
+                        val DireKDA=it.scoreboard.dire.players.get(i).kills.toString()+"/"+it.scoreboard.dire.players.get(i).death.toString()+"/"+it.scoreboard.dire.players.get(i).assists.toString()
+                        direKDA[i].text=DireKDA
+                        val DireLH=it.scoreboard.dire.players.get(i).last_hits.toString()+"/"+it.scoreboard.dire.players.get(i).denies.toString()
+                        direLH[i].text=DireLH
+                        val DireGPM=it.scoreboard.dire.players.get(i).gold_per_min.toString()+"/"+it.scoreboard.dire.players.get(i).xp_per_min.toString()
+                        direGPM[i].text=DireGPM
                     }
+
+
 
                 } else{
                     matchId.text="Пики Баны"

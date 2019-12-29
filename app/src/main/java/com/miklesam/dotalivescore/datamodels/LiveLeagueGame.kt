@@ -1,3 +1,5 @@
 package com.miklesam.steamapi.datamodels
 
-data class LiveLeagueGame(var match_id:String,var scoreboard: Scoreboard)
+import com.miklesam.dotalivescore.datamodels.Team
+
+data class LiveLeagueGame(var match_id:String, var scoreboard: Scoreboard,var radiant_team: Team, var dire_team: Team)
