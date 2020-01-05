@@ -12,7 +12,7 @@ class LiveGamesRepository{
         SteamApiClient.getLiveGames()
     }
 
-    fun getLiveTournamentsGames(league:String){
+    fun getLiveTournamentsGames(league:Int){
         SteamApiClient.getTournamentsLiveGames(league)
     }
 

@@ -24,12 +24,12 @@
             android:text="1"
             android:id="@+id/playerRank"
             android:layout_gravity="center"
-            android:textColor="@android:color/black"
             android:textSize="20sp">
 
         </TextView>
 
         <TextView
+            android:gravity="start"
             android:layout_width="0dp"
             android:layout_weight="60"
             android:layout_height="wrap_content"
@@ -37,7 +37,6 @@
             android:text="Line 1"
             android:id="@+id/playerName"
             android:layout_gravity="center"
-            android:textColor="@android:color/black"
             android:textSize="20sp">
 
         </TextView>
@@ -50,8 +49,7 @@
             android:text="Tag"
             android:id="@+id/playerTag"
             android:layout_gravity="center"
-            android:textColor="@android:color/black"
-            android:textSize="15sp">
+               android:textSize="15sp">
 
         </TextView>
 

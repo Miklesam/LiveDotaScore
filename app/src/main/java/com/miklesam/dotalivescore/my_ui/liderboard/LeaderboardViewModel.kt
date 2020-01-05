@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.miklesam.steamapi.datamodels.Player
 
-class LiderboardViewModel : ViewModel() {
+class LeaderboardViewModel : ViewModel() {
 
-    private var repository= LiderboardRepository()
+    private var repository= LeaderboardRepository()
     private val progress = MutableLiveData<Boolean>()
     private val division = MutableLiveData<String>()
     fun isProgress(): LiveData<Boolean> = progress

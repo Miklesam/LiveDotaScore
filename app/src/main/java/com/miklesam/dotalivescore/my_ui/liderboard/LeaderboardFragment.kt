@@ -14,26 +14,29 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.miklesam.dotalivescore.R
 import com.miklesam.steamapi.adapters.LidearboardAdapter
-import com.miklesam.steamapi.ui.liderboard.LiderboardViewModel
+import com.miklesam.steamapi.ui.liderboard.LeaderboardViewModel
 
 
-class LiderboardFragment : Fragment() {
+class LeaderboardFragment : Fragment() {
 
-    private lateinit var liderboardViewModel: LiderboardViewModel
+    private lateinit var leaderboardViewModel: LeaderboardViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        liderboardViewModel =
-            ViewModelProviders.of(this).get(LiderboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_liderboard, container, false)
+        leaderboardViewModel =
+            ViewModelProviders.of(this).get(LeaderboardViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_leaderboard, container, false)
         val recyclerLidearboard=root.findViewById<RecyclerView>(R.id.recyclerLidearboard)
-        val spinner=root.findViewById<Spinner>(R.id.spinner)
-        val linlayout=root.findViewById<LinearLayout>(R.id.linlayout)
+        //val spinner=root.findViewById<Spinner>(R.id.spinner)
+        //val linlayout=root.findViewById<LinearLayout>(R.id.linlayout)
         val progressBar=root.findViewById<ProgressBar>(R.id.progress)
         val errorText=root.findViewById<TextView>(R.id.errorText)
+        val choose = resources.getStringArray(com.miklesam.dotalivescore.R.array.devision_request)
+        val division=choose[0]
+        leaderboardViewModel.setDevision(division)
 
         val spinnerAdapter = context?.let {
             ArrayAdapter.createFromResource(
@@ -43,8 +46,8 @@ class LiderboardFragment : Fragment() {
             )
         }
         spinnerAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter=spinnerAdapter
-
+        //spinner.adapter=spinnerAdapter
+/*
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
@@ -52,43 +55,45 @@ class LiderboardFragment : Fragment() {
             ) {
                 val choose = resources.getStringArray(com.miklesam.dotalivescore.R.array.devision_request)
                 val division=choose[selectedItemPosition]
-                liderboardViewModel.setDevision(division)
+                leaderboardViewModel.setDevision(division)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
+        */
+
 
         recyclerLidearboard.layoutManager = LinearLayoutManager(context)
         recyclerLidearboard.setHasFixedSize(true)
         val adapter = LidearboardAdapter()
         recyclerLidearboard.adapter = adapter
 
-        liderboardViewModel.getPlayers().observe(this, Observer {
+        leaderboardViewModel.getPlayers().observe(this, Observer {
             if(it!=null){
                 adapter.setPlayers(it)
-                liderboardViewModel.setProgress(false)
+                leaderboardViewModel.setProgress(false)
             }
 
         })
 
-        liderboardViewModel.getErrorPlayers().observe(this, Observer {
+        leaderboardViewModel.getErrorPlayers().observe(this, Observer {
             if(it!=null){
-                liderboardViewModel.setProgress(false)
+                leaderboardViewModel.setProgress(false)
                 errorText.text=it
                 errorText.visibility= VISIBLE
-                linlayout.visibility= GONE
+                recyclerLidearboard.visibility= GONE
             }
         })
 
 
-        liderboardViewModel.isProgress().observe(this, Observer {
+        leaderboardViewModel.isProgress().observe(this, Observer {
             if(it){
                 errorText.visibility= GONE
                 progressBar.visibility=VISIBLE
-                linlayout.visibility= GONE
+                recyclerLidearboard.visibility= GONE
             }else{
                 progressBar.visibility=GONE
-                linlayout.visibility=VISIBLE
+                recyclerLidearboard.visibility=VISIBLE
             }
         })
 

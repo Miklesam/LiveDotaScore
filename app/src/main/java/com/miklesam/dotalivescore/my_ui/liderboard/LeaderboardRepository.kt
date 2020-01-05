@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.miklesam.steamapi.retrofit.Dota2ApiClient
 import com.miklesam.steamapi.datamodels.Player
 
-class LiderboardRepository {
+class LeaderboardRepository {
 
 
     fun getLidearBoard(division:String) {

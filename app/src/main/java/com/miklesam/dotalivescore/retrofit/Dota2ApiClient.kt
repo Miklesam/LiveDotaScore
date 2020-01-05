@@ -66,15 +66,15 @@ object Dota2ApiClient {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    val teir4=ArrayList<League>()
-                    teir4.clear()
-                    for (league in it.infos){
-                        if( league.tier.toInt()>2&&league.tier.toInt()<6){
-                            teir4.add(league)
-                        }
-                    }
-                    val teirnew=teir4.asReversed()
-                    mLeagues.postValue(teirnew)
+                    //val teir4=ArrayList<League>()
+                    //teir4.clear()
+                    //for (league in it.infos){
+                        //if( league.tier.toInt()>2&&league.tier.toInt()<6){
+                        //    teir4.add(league)
+                       // }
+                   // }
+                    //val teirnew=teir4.asReversed()
+                    mLeagues.postValue(it.infos)
                 },{
                     if(it is TimeoutException){
                         mLeagueError.postValue("action doesn't complete within the given time");

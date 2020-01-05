@@ -23,7 +23,7 @@ class LiveGamesViewModel : ViewModel() {
     fun getLiveGames(){
        repository.getLiveGames()
     }
-    fun getLiveTournamentGames(league:String){
+    fun getLiveTournamentGames(league:Int){
         repository.getLiveTournamentsGames(league)
     }
     fun setCurrentGame(boolean: Boolean){

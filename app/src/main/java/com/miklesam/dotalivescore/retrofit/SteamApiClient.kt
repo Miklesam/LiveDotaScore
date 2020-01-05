@@ -44,12 +44,12 @@ object SteamApiClient{
                     mGames.value=it.game_list
                 },{
                     mError.value=it.message
-                    //Log.w("liveGames","Error: "+it.message)
+                    Log.w("liveGames","Error: "+it.message)
                 }))
     }
 
 
-    fun getTournamentsLiveGames(league:String){
+    fun getTournamentsLiveGames(league:Int){
         mGame.value=null
         val radiantTeam=ArrayList<LivePlayer>()
         val direTeam=ArrayList<LivePlayer>()
@@ -57,7 +57,7 @@ object SteamApiClient{
         radiantTeam.clear()
         direTeam.clear()
         compositeDisposable.add(
-            ServiceGenerator.SteamHolderApi.getLiveLeagueGames("DC5456E165A004A2F31197712AA3990D",league)
+            ServiceGenerator.SteamHolderApi.getLiveLeagueGames("DC5456E165A004A2F31197712AA3990D",league.toString())
                 //.timeout(4, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

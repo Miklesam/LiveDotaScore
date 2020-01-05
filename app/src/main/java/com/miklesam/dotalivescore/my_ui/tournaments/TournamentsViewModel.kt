@@ -12,7 +12,7 @@ class TournamentsViewModel : ViewModel() {
     fun isProgress(): LiveData<Boolean> = progress
 
     init{
-        getTournaments()
+        //getTournaments()
     }
 
 

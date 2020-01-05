@@ -47,8 +47,8 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
         android:layout_height="match_parent"
         android:visibility="visible"
         android:id="@+id/swiperRefresh"
@@ -79,12 +79,14 @@
             />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone"
+    android:id="@+id/gameInfo">
     <LinearLayout
         android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="match_parent"
-        android:id="@+id/gameInfo"
-        android:visibility="gone"
         android:orientation="vertical"
         android:layout_height="wrap_content">
 
@@ -375,5 +377,6 @@
             layout="@layout/hero_stats_layout"/>
 
     </LinearLayout>
+</ScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

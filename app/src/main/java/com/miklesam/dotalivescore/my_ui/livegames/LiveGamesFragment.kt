@@ -24,7 +24,7 @@ import com.miklesam.steamapi.utils.Constants.DEFAULT_HEROES_IMAGE
 
 class LiveGamesFragment : Fragment(),OnGameListener {
     lateinit  var liveGamesViewModel: LiveGamesViewModel
-    private lateinit var gameInfo: LinearLayout
+    private lateinit var gameInfo: ScrollView
     private lateinit var swiperRefresh: SwipeRefreshLayout
 
 
@@ -37,7 +37,7 @@ class LiveGamesFragment : Fragment(),OnGameListener {
     override fun onGameClick(position: Int) {
         Log.w("Click, In Fragment","position= ${mGames.get(position).team_name_dire}"
         )
-        if(mGames.get(position).league_id.equals("0")){
+        if(mGames.get(position).league_id==0){
             Toast.makeText(context, "This is Pub please choose league game", Toast.LENGTH_SHORT).show()
         }else{
             currentGame=1
@@ -50,7 +50,7 @@ class LiveGamesFragment : Fragment(),OnGameListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         liveGamesViewModel =
-            ViewModelProviders.of(this).get(LiveGamesViewModel::class.java)
+        ViewModelProviders.of(this).get(LiveGamesViewModel::class.java)
 
     }
 
@@ -71,7 +71,7 @@ class LiveGamesFragment : Fragment(),OnGameListener {
         val direTeam=root.findViewById<TextView>(R.id.DireTeam)
         recyclerLiveGame.adapter = adapter
         swiperRefresh=root.findViewById<SwipeRefreshLayout>(R.id.swiperRefresh)
-        gameInfo=root.findViewById<LinearLayout>(R.id.gameInfo)
+        gameInfo=root.findViewById<ScrollView>(R.id.gameInfo)
 
         val matchId=root.findViewById<TextView>(R.id.matchId)
         val RadHero = Array<TextView>(5){root.findViewById<TextView>(R.id.Radiant1)
@@ -119,15 +119,25 @@ class LiveGamesFragment : Fragment(),OnGameListener {
 
         val emo=root.findViewById<ImageView>(R.id.emo)
         emo.setOnClickListener { liveGamesViewModel.setCurrentGame(false) }
-
         liveGamesViewModel.getLiveGames()
         liveGamesViewModel.setProgress(true)
 
-
         liveGamesViewModel.returnGames().observe(this, Observer {
             if(it!=null){
-                mGames=it
-                adapter.setGames(it)
+                val leagueList=ArrayList<LiveGame>()
+                Log.w("Here Games",it.toString())
+                for (game in it){
+                    if(game.league_id!=0){
+                        leagueList.add(game)
+                    }
+                }
+                if(leagueList.isNotEmpty()){
+                    adapter.setGames(leagueList)
+                    mGames=leagueList
+                }else{
+                    adapter.setNoGame()
+                }
+
                 swiperRefresh.isRefreshing=false
                 liveGamesViewModel.setProgress(false)
             }
@@ -137,12 +147,12 @@ class LiveGamesFragment : Fragment(),OnGameListener {
 
         liveGamesViewModel.isProgress().observe(this, Observer {
             if(it){
-                errorText.visibility= View.GONE
-                progressBar.visibility= View.VISIBLE
-                recyclerLiveGame.visibility= View.GONE
+                errorText.visibility= GONE
+                progressBar.visibility= VISIBLE
+                recyclerLiveGame.visibility= GONE
             }else{
-                progressBar.visibility= View.GONE
-                recyclerLiveGame.visibility= View.VISIBLE
+                progressBar.visibility= GONE
+                recyclerLiveGame.visibility= VISIBLE
             }
         })
 
@@ -150,16 +160,21 @@ class LiveGamesFragment : Fragment(),OnGameListener {
             if(it!=null){
                 liveGamesViewModel.setProgress(false)
                 errorText.text=it
-                errorText.visibility= View.VISIBLE
-                recyclerLiveGame.visibility= View.GONE
+                errorText.visibility= VISIBLE
+                recyclerLiveGame.visibility= GONE
             }
         })
 
         liveGamesViewModel.returnCurrentGame().observe(this, Observer {
             if(it!=null){
-                if(it.scoreboard.radiant.players.get(0).hero_id>0){
+
+                if(it.scoreboard.radiant.players.get(0).hero_id>0)
+                {
                     matchId.text=it.match_id
-                    radTeam.text=it.radiant_team.team_name
+                    if(it.radiant_team.team_name!=null){
+                        radTeam.text=it.radiant_team.team_name
+                    }
+
                     direTeam.text=it.dire_team.team_name
 
                     for (i in 0..4){
@@ -180,8 +195,6 @@ class LiveGamesFragment : Fragment(),OnGameListener {
                         val DireGPM=it.scoreboard.dire.players.get(i).gold_per_min.toString()+"/"+it.scoreboard.dire.players.get(i).xp_per_min.toString()
                         direGPM[i].text=DireGPM
                     }
-
-
 
                 } else{
                     matchId.text="Пики Баны"
@@ -208,11 +221,8 @@ class LiveGamesFragment : Fragment(),OnGameListener {
 
         swiperRefresh.setOnRefreshListener {
             Log.w("Refresh","New Refresh")
-            liveGamesViewModel.getLiveGames() }
-
-
-
-
+            liveGamesViewModel.getLiveGames()
+        }
 
         return root
     }
