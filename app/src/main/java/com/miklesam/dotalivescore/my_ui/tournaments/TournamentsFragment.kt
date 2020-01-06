@@ -58,7 +58,7 @@ class TournamentsFragment : Fragment() {
                     }
                 }
                 val teirnew=teir4.asReversed()
-                Log.w("HelloMapa",mapa.toString())
+                //Log.w("HelloMapa",mapa.toString())
                 adapter.setLeagues(teirnew)
                 tournamentsViewModel.setProgress(false)
             }

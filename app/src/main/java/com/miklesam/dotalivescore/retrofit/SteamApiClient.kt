@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.miklesam.steamapi.datamodels.LiveGame
 import com.miklesam.steamapi.datamodels.LiveLeagueGame
 import com.miklesam.steamapi.datamodels.LivePlayer
+import com.miklesam.steamapi.datamodels.Scoreboard
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -49,11 +50,12 @@ object SteamApiClient{
     }
 
 
-    fun getTournamentsLiveGames(league:Int){
+    fun getTournamentsLiveGames(league:Int,match:Long){
         mGame.value=null
         val radiantTeam=ArrayList<LivePlayer>()
         val direTeam=ArrayList<LivePlayer>()
         val compositeDisposable= CompositeDisposable()
+        var getCurrentGame=false
         radiantTeam.clear()
         direTeam.clear()
         compositeDisposable.add(
@@ -65,7 +67,16 @@ object SteamApiClient{
                     if(it.result.games.size==0){
                         Log.w("liveGames","Error: Seems like game already end")
                     }else{
-                        mGame.value=it.result.games.get(0)
+                        for(tourgame in it.result.games){
+                            if(match==tourgame.match_id){
+                                getCurrentGame=true
+                                mGame.value=tourgame
+                            }
+                        }
+                        if(!getCurrentGame){
+                            Log.w("liveGames","Error: Seems like game already end")
+                        }
+
                     }
                     },{
                     Log.w("liveGames","Error: "+it.message)

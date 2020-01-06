@@ -30,13 +30,9 @@ class LeaderboardFragment : Fragment() {
             ViewModelProviders.of(this).get(LeaderboardViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_leaderboard, container, false)
         val recyclerLidearboard=root.findViewById<RecyclerView>(R.id.recyclerLidearboard)
-        //val spinner=root.findViewById<Spinner>(R.id.spinner)
-        //val linlayout=root.findViewById<LinearLayout>(R.id.linlayout)
+        val spinner=root.findViewById<Spinner>(R.id.spinner)
         val progressBar=root.findViewById<ProgressBar>(R.id.progress)
         val errorText=root.findViewById<TextView>(R.id.errorText)
-        val choose = resources.getStringArray(com.miklesam.dotalivescore.R.array.devision_request)
-        val division=choose[0]
-        leaderboardViewModel.setDevision(division)
 
         val spinnerAdapter = context?.let {
             ArrayAdapter.createFromResource(
@@ -46,8 +42,8 @@ class LeaderboardFragment : Fragment() {
             )
         }
         spinnerAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        //spinner.adapter=spinnerAdapter
-/*
+        spinner.adapter=spinnerAdapter
+
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
@@ -60,7 +56,7 @@ class LeaderboardFragment : Fragment() {
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
-        */
+
 
 
         recyclerLidearboard.layoutManager = LinearLayoutManager(context)

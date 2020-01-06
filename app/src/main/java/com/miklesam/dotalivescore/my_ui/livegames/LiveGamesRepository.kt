@@ -12,8 +12,8 @@ class LiveGamesRepository{
         SteamApiClient.getLiveGames()
     }
 
-    fun getLiveTournamentsGames(league:Int){
-        SteamApiClient.getTournamentsLiveGames(league)
+    fun getLiveTournamentsGames(league:Int,match:Long){
+        SteamApiClient.getTournamentsLiveGames(league,match)
     }
 
     fun returnGames(): LiveData<List<LiveGame>> {

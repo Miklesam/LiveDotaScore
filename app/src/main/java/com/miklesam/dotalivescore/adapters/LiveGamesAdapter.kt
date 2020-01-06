@@ -26,7 +26,7 @@ class LiveGamesAdapter(onGameListener: OnGameListener) : RecyclerView.Adapter<Re
     }
 
     fun setNoGame(){
-        val asd=LiveGame(0,"","NoLiveGame","","","","","")
+        val asd=LiveGame(0,"","NoLiveGame","","","","","",0)
         setGames(listOf(asd))
     }
 

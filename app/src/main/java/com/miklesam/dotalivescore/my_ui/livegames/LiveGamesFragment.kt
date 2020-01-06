@@ -41,7 +41,7 @@ class LiveGamesFragment : Fragment(),OnGameListener {
             Toast.makeText(context, "This is Pub please choose league game", Toast.LENGTH_SHORT).show()
         }else{
             currentGame=1
-            liveGamesViewModel.getLiveTournamentGames(mGames.get(position).league_id)
+            liveGamesViewModel.getLiveTournamentGames(mGames.get(position).league_id,mGames.get(position).match_id)
             liveGamesViewModel.setCurrentGame(true)
         }
 
@@ -125,7 +125,7 @@ class LiveGamesFragment : Fragment(),OnGameListener {
         liveGamesViewModel.returnGames().observe(this, Observer {
             if(it!=null){
                 val leagueList=ArrayList<LiveGame>()
-                Log.w("Here Games",it.toString())
+                //Log.w("Here Games",it.toString())
                 for (game in it){
                     if(game.league_id!=0){
                         leagueList.add(game)
@@ -170,12 +170,12 @@ class LiveGamesFragment : Fragment(),OnGameListener {
 
                 if(it.scoreboard.radiant.players.get(0).hero_id>0)
                 {
-                    matchId.text=it.match_id
-                    if(it.radiant_team.team_name!=null){
-                        radTeam.text=it.radiant_team.team_name
-                    }
+                    matchId.text=it.match_id.toString()
+                    //if(it.radiant_team.team_name!=null){
+                    //    radTeam.text=it.radiant_team.team_name
+                    //}
 
-                    direTeam.text=it.dire_team.team_name
+                    //direTeam.text=it.dire_team.team_name
 
                     for (i in 0..4){
                         RadHero[i].text=Constants.DEFAULT_HEROES_NAME.get(it.scoreboard.radiant.players.get(i).hero_id)

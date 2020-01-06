@@ -38,7 +38,7 @@ object Dota2ApiClient {
         val compositeDisposable= CompositeDisposable()
         compositeDisposable.add(
             ServiceGenerator.RetrofitHolderApi.getRanks(division)
-                .timeout(4, TimeUnit.SECONDS)
+                .timeout(5, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -62,7 +62,7 @@ object Dota2ApiClient {
         val compositeDisposable= CompositeDisposable()
         compositeDisposable.add(
             ServiceGenerator.RetrofitHolderApi.getTournaments()
-                .timeout(4, TimeUnit.SECONDS)
+                .timeout(5, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

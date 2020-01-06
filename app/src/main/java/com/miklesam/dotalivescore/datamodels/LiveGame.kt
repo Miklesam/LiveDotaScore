@@ -8,7 +8,8 @@ data class LiveGame(
     var team_name_dire:String,
     var radiant_lead:String,
     var game_time:String,
-    var average_mmr:String
+    var average_mmr:String,
+    var match_id:Long
 
 
 
