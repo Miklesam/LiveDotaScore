@@ -198,6 +198,7 @@ class LiveGamesFragment : Fragment(),OnGameListener {
 
                 } else{
                     matchId.text="Пики Баны"
+                    Log.w("Picks",it.scoreboard.radiant.picks.toString())
                 }
 
 
